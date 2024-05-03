@@ -1,0 +1,63 @@
+<apex:page controller="HomePageController">
+ <style>
+ body {
+  Arial, sans-serif;
+ background-color: grey;
+  0;
+ padding: 0;
+ display: flex;
+ justify-content: center;
+ align-items: center;
+ height: 100vh;
+ }
+ .container {
+ width: 600px;
+ padding: 20px;
+ background-color: #fff;
+ border-radius: 5px;
+ box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+ }
+ .header {
+ text-align: center;
+  20px;
+ color: purple;
+ font-size: 20px;
+ }
+ .select-section {
+ text-align: center;
+  20px;
+ }
+ .btn-go {
+ background-color: #007bff;
+ color: #fff;
+ border: none;
+ padding: 10px 20px;
+ border-radius: 5px;
+ cursor: pointer;
+ transition: background-color 0.3s ease;
+ font-size: 16px;
+ width: 100%;
+ }
+ .btn-go:hover {
+ background-color: #0056b3;
+ }
+ </style>
+ <apex:form >
+ <div class="container">
+ <div class="header">
+ <h1 style="color: black; font-weight: bold; font-size: 30px">Calculator</h1> <!-- Change 
+header color -->
+ <p>Select Operation Type</p>
+ </div>
+ <div class="select-section">
+ <apex:selectList value="{!selectedConversionType}" label="Conversion Type">
+ <apex:selectOptions value="{!items}"/>
+ </apex:selectList>
+ </div>
+ <div style="text-align: center;">
+ <apex:commandButton value="Proceed" styleClass="btn-go" 
+action="{!redirectToConversionPage}"/>
+ </div>
+ </div>
+ </apex:form>
+</apex:page>

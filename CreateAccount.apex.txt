@@ -1,0 +1,66 @@
+
+public class CreateAccount {
+    public String name {get; set;}
+    public String phoneNumber {get; set;}
+    public String prn {get; set;}
+    public String stud_phoneNumber {get; set;}
+    public String par_phoneNumber {get; set;}
+    public String per_add {get; set;}  
+    public String tem_add {get; set;}    
+    public String selectedname {get; set;}
+    public String websiteURL {get; set;}
+    public List<Selectoption> lstnamesel {get; set;}
+ 
+    public CreateAccount(ApexPages.StandardController controller) {
+        lstnamesel = new List<selectoption>();
+        lstnamesel.add(new selectOption('','- None -'));
+        lstnamesel.add(new selectOption('TE 1','TE 1'));
+        lstnamesel.add(new selectOption('TE 2','TE 2'));
+        lstnamesel.add(new selectOption('TE 3','TE 3'));
+        lstnamesel.add(new selectOption('BE 1','BE 1'));
+        lstnamesel.add(new selectOption('BE 2','BE 2'));
+        lstnamesel.add(new selectOption('BE 3','BE 3'));
+    }
+ 
+    public Boolean isValidMobileNumber(String num) {
+    // Regular expression pattern to validate mobile number format
+    String regexPattern = '^[6-9]\\d{9}$';
+    
+    Pattern pattern = Pattern.compile(regexPattern);
+    Matcher matcher = pattern.matcher(num != null ? num.trim() : '');
+    
+    return matcher.matches();
+}
+ 
+ 
+    public PageReference createAccount() {
+        System.debug('test create');
+        
+        // Validate mobile numbers
+        if (!isValidMobileNumber(stud_phoneNumber) || !isValidMobileNumber(par_phoneNumber)) {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.ERROR,'Please enter valid mobile numbers for Student and Parents.'));
+            return null;
+        }
+        
+        if (!String.isEmpty(name)) {
+            Account accountRecord = new Account(
+                Name = name,
+                Phone = stud_phoneNumber,
+                class__c = selectedname,
+                Website = websiteURL
+            );
+            INSERT accountRecord;
+            PageReference pg = new PageReference('/'+accountRecord.Id);
+            pg.setRedirect(true);
+            return pg;
+        } else {
+            ApexPages.addmessage(new ApexPages.message(ApexPages.severity.CONFIRM,'Please enter Account Name'));
+        }
+        return null;
+    }
+ 
+    public PageReference cancelAccount() {
+        PageReference pg = new PageReference('/'+Schema.SObjectType.Account.getKeyPrefix()+'/o');
+        return pg;
+    }
+}

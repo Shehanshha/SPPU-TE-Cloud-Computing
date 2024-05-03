@@ -1,0 +1,59 @@
+<apex:page standardController="Account" extensions="CreateAccount">
+    <style>
+        .center {
+            0 auto;
+            width: 50%; /* Adjust the width as per your requirement */
+            text-align: center;
+        }
+        .requiredInput {
+            display: inline-block;
+            position: relative;
+        }
+        .requiredBlock {
+            background-color: #ffb3b3;
+            position: absolute;
+            top: 0;
+            left: -1px;
+            bottom: 0;
+            width: 3px;
+            pointer-events: none;
+        }
+        .centerContent {
+            0 auto;
+            width: 50%; /* Adjust the width as per your requirement */
+        }
+    </style>    
+ 
+    <div class="centerContent">
+        <apex:form id="apexFrom">
+            <apex:pageBlock title="Industry Visit:" id="pageBlockId">
+                <apex:pageMessages id="showmsg"></apex:pageMessages>
+                <apex:pageBlockSection columns="1">
+                    <!--<div class = "requiredInput">
+                        <div class = "requiredBlock"></div>
+                        <apex:inputText value="{!name}" label="Account Name" required="true"/>
+                    </div>-->
+                    <apex:inputText value="{!name}" label="Student Name" required="true"/>
+                    <apex:inputText value="{!prn}" label="PRN" required="true"/>    
+                    <apex:inputText value="{!stud_phoneNumber}" label="Student Phone_no." />
+                    <apex:inputText value="{!par_phoneNumber}" label="Parents Phone_no." required="true"/>  
+                    <apex:inputText value="{!per_add}" label="Permanent Address" required="true"/>
+                    <apex:inputText value="{!tem_add}" label="Temporary Address" required="true"/>    
+                    <apex:selectList size="1" value="{!selectedname}" label="Class_">
+                        <apex:selectOptions value="{!lstnamesel}"/>
+                    </apex:selectList>
+                    
+                </apex:pageBlockSection>
+            </apex:pageBlock>
+            
+            <div class="center">
+                <apex:commandButton action="{!createAccount}" value="Save"/>
+                <apex:commandButton action="{!cancelAccount}" value="Cancel"/>
+            </div>
+        
+            <!-- ACTION FUNCTIONS-->
+            <apex:actionFunction name="createFunction" action="{!createAccount}"/>
+            <apex:actionFunction name="cancelFunction" action="{!cancelAccount}"/>
+        </apex:form>
+    </div>
+</apex:page>

@@ -1,0 +1,22 @@
+public class HomePageController {
+    public String selectedConversionType { get; set; }
+ 
+    public List<SelectOption> getItems() {
+        List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('Basic Calculator', 'Basic Calculator'));
+        options.add(new SelectOption('Weight Conversions', 'Weight Conversions'));
+ 
+        return options;
+    }
+ 
+    public PageReference redirectToConversionPage() {
+        if(selectedConversionType == 'Basic Calculator') {
+            return Page.Calculatorr; // Redirect to the Visualforce page for the basic calculator
+        } else if(selectedConversionType == 'Weight Conversions') {
+            return Page.Weight; // Redirect to the Visualforce page for weight conversions
+        } else {
+            return null; // Return null if no valid conversion type is selected
+        }
+    }
+}
+ 

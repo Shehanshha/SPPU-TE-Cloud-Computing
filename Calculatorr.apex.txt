@@ -1,0 +1,77 @@
+public class Calculatorr {
+    public String display { get; set; }
+    public Decimal result { get; set; }
+    public String currentNumber { get; set; }
+    public String currentOperation { get; set; }
+    public Boolean isNewNumber { get; set; }
+    
+    // Constructor
+    public Calculatorr() {
+        display = '0';
+        result = 0;
+        currentNumber = '';
+        currentOperation = '';
+        isNewNumber = true;
+    }
+    
+    // Method to handle number button click
+    public void pressNumber() {
+        String num = ApexPages.currentPage().getParameters().get('num');
+        if (isNewNumber) {
+            display = num;
+            isNewNumber = false;
+        } else {
+            display += num;
+        }
+        currentNumber += num;
+    }
+    
+    // Method to handle operation button click
+    public void pressOperation() {
+        if (!isNewNumber && currentOperation != '') {
+            calculate();
+            currentOperation = '';
+        } else {
+            result = Decimal.valueOf(display);
+        }
+        currentOperation = ApexPages.currentPage().getParameters().get('operation');
+        isNewNumber = true;
+    }
+    
+    // Method to perform calculation
+    public void calculate() {
+        Decimal num2 = Decimal.valueOf(display);
+        if (currentOperation == '+') {
+            result += num2;
+        } else if (currentOperation == '-') {
+            result -= num2;
+        } else if (currentOperation == '*') {
+            result *= num2;
+        } else if (currentOperation == '/') {
+            if (num2 != 0) {
+                result /= num2;
+            } else {
+                ApexPages.addMessage(new ApexPages.Message(ApexPages.Severity.ERROR, 'Cannot divide by zero.'));
+            }
+        }
+        display = String.valueOf(result);
+    }
+    
+    // Method to handle equal button click
+    public void pressEqual() {
+        if (!isNewNumber && currentOperation != '') {
+            calculate();
+            currentOperation = '';
+        }
+        isNewNumber = true;
+    }
+    
+    // Method to handle clear button click
+    public void pressClear() {
+        display = '0';
+        result = 0;
+        currentNumber = '';
+        currentOperation = '';
+        isNewNumber = true;
+    }
+}

@@ -1,0 +1,71 @@
+public class Weight{
+    public Decimal weight { get; set; }
+ public String fromUnit { get; set; }
+ public String toUnit { get; set; }
+ public Decimal convertedWeight { get; set; }
+ 
+ // Method to provide weight units for select lists
+ public List<SelectOption> getWeightUnits() {
+ List<SelectOption> options = new List<SelectOption>();
+        options.add(new SelectOption('Milligrams', 'Milligrams'));
+        options.add(new SelectOption('Grams', 'Grams'));
+        options.add(new SelectOption('Kilograms', 'Kilograms'));
+        options.add(new SelectOption('Tonnes', 'Tonnes'));
+        return options;
+ 
+ }
+ 
+public void appendDelete() {
+ if (weight != null) {
+ String weightString = String.valueOf(weight);
+ if (weightString != null && weightString.length() > 0) {
+ weightString = weightString.substring(0, weightString.length() - 1);
+ if (weightString.length() > 0) {
+ weight = Decimal.valueOf(weightString);
+ } else {
+ weight = null;
+ }
+ }
+ }
+}
+ // Method to perform weight conversion
+ public void doConversion() {
+ convertedWeight = convertWeight(weight, fromUnit, toUnit);
+ }
+ // Method to clear input fields and reset converted weight
+ public PageReference clear() {
+ weight = null;
+ fromUnit = null;
+ toUnit = null;
+ convertedWeight = null;
+ return null;
+ }
+ 
+ // Method to perform weight conversion logic
+ public Decimal convertWeight(Decimal weight, String fromUnit, String toUnit) {
+ Decimal convertedWeight = 0;
+ 
+        Decimal result = 0;
+        if (fromUnit == 'Milligrams') {
+            result =  weight / 1000;
+        } else if (fromUnit == 'Grams') {
+            result =  weight;
+        } else if (fromUnit == 'Kilograms') {
+            result =  weight * 1000;
+        } else if (fromUnit == 'Tonnes') {
+            result =  weight * 1000000;
+        }
+        
+        if (toUnit == 'Milligrams') {
+            convertedWeight = result * 1000;
+        } else if (toUnit == 'Grams') {
+            convertedWeight = result;
+        } else if (toUnit == 'Kilograms') {
+            convertedWeight = result / 1000;
+        } else if (toUnit == 'Tonnes') {
+            convertedWeight = result / 1000000;
+        }
+ 
+ return convertedWeight;
+ }
+}

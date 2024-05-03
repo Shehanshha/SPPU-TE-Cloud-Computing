@@ -1,0 +1,104 @@
+<apex:page controller="Weight">
+    <apex:form >
+ <apex:pageBlock title="Weight Conversion">
+ <apex:pageBlockSection >
+ <apex:outputPanel layout="block" styleClass="calculator">
+ <apex:outputLabel />
+ <apex:outputLabel styleClass="calculator-title" value="Calculator"/>
+ <apex:outputLabel />
+ <apex:outputLabel /><apex:outputLabel /><apex:outputLabel />
+ 
+ <apex:outputLabel value="Weight"/>
+ <apex:outputPanel id="inputPanel">
+ <div class="input-style">
+ <apex:inputText value="{!weight}" styleClass="input-field" label="Weight"/>
+ </div>
+ </apex:outputPanel>
+ 
+ <apex:outputLabel />
+ <apex:outputLabel value="From Unit"/>
+ <apex:selectList value="{!fromUnit}" size="1" styleClass="select-field" label="From Unit">
+ <apex:selectOptions value="{!weightUnits}"/>
+ </apex:selectList>
+ <apex:outputLabel />
+ <apex:outputLabel value="To Unit "/>
+ <apex:selectList value="{!toUnit}" size="1" styleClass="select-field" label="To Unit">
+ <apex:selectOptions value="{!weightUnits}"/>
+ </apex:selectList>
+ <div class="buttons">
+ <apex:commandButton value="7" styleClass="btn" onclick="setNumber('7');" 
+rerender="inputPanel" />
+ <apex:commandButton value="8" styleClass="btn" onclick="setNumber('8');" 
+rerender="inputPanel" />
+ <apex:commandButton value="9" styleClass="btn" onclick="setNumber('9');" 
+rerender="inputPanel" />
+ <apex:commandButton value="4" styleClass="btn" onclick="setNumber('4');" 
+rerender="inputPanel" />
+ <apex:commandButton value="5" styleClass="btn" onclick="setNumber('5');" 
+rerender="inputPanel" />
+ <apex:commandButton value="6" styleClass="btn" onclick="setNumber('6');" 
+rerender="inputPanel" />
+ <apex:commandButton value="1" styleClass="btn" onclick="setNumber('1');" 
+rerender="inputPanel" />
+ <apex:commandButton value="2" styleClass="btn" onclick="setNumber('2');" 
+rerender="inputPanel" />
+ <apex:commandButton value="3" styleClass="btn" onclick="setNumber('3');" 
+rerender="inputPanel" />
+ <apex:commandButton value="0" styleClass="btn" onclick="setNumber('0');" 
+rerender="inputPanel" />
+ <apex:commandButton value="." styleClass="btn" onclick="setNumber('.');" 
+rerender="none" immediate="true" />
+ <apex:commandButton value="del" styleClass="btn" action="{!appendDelete}" 
+rerender="inputPanel" />
+ </div>
+ <div class="action-buttons">
+ <apex:commandButton value="Convert" styleClass="btn" action="{!doConversion}"/>
+ <apex:commandButton value="Clear" styleClass="btn" action="{!clear}"/>
+ 
+ </div>
+ </apex:outputPanel>
+ </apex:pageBlockSection>
+ <apex:pageBlockSection title="Result">
+ <apex:outputText value="Converted Weight: {!convertedWeight}" styleClass="outputfield"/>
+ </apex:pageBlockSection>
+ </apex:pageBlock>
+ </apex:form>
+ <style>
+ .calculator {
+ display: grid;
+ grid-template-columns: repeat(3, 60px);
+ grid-gap: 5px;
+ justify-content: center;
+ align-items: center;
+ }
+ .buttons, .action-buttons {
+ grid-column: 1 / span 3;
+ display: grid;
+ grid-template-columns: repeat(3, 60px);
+ grid-gap: 5px;
+ justify-content: center;
+ }
+ .input-field, .output-field, .btn {
+ width: 60px;
+  5px;
+ }
+ .select-field {
+ width: 100px;
+  5px;
+ }
+ .calculator-title {
+ font-weight: bold;
+ font-size: 20px;
+ }
+ </style>
+ <script>
+ function setNumber(value) {
+ var inputField = document.querySelector('.input-style input');
+ // Check if the value is "." and if "." is already present in the input
+ if (value === "." && inputField.value.indexOf(".") !== -1) {
+ return; // Don't add another "." if it's already there
+ }
+ inputField.value += value;
+ }
+ </script>
+</apex:page>

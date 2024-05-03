@@ -1,0 +1,100 @@
+<apex:page controller="Calculatorr">
+    <style>
+        .calculatorr-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+ 
+        .calculatorr {
+            width: 400px;
+            border: 1px solid #ccc;
+            border-radius: 10px;
+            padding: 20px;
+            background-color:#b3ffff
+        }
+ 
+        .calculatorr button {
+            width: 70px;
+            height: 70px;
+            font-size: 24px;
+            5px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            background-color: #F8F8FF;
+            color: #000;
+        }
+ 
+        .calculatorr button.operator,
+        .calculatorr button.clear,
+        .calculatorr button.equal {
+            color: #000;
+        }
+ 
+        .display {
+            font-size: 28px;
+            20px;
+            text-align: right;
+            padding: 10px;
+            background-color: #fff;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+        }
+    </style>
+ 
+    <div class="calculatorr-container">
+        <div class="calculatorr">
+            <div class="display">{!display}</div>
+            <button class="clear" onclick="clearDisplay()">C</button>
+            <button class="operator" onclick="updateDisplay('%')">%</button>
+            <button class="back-arrow" onclick="backspace()">←</button>
+            <button class="operator" onclick="updateDisplay('/')">/</button>
+            <br/>
+            <button class="number" onclick="updateDisplay('7')">7</button>
+            <button class="number" onclick="updateDisplay('8')">8</button>
+            <button class="number" onclick="updateDisplay('9')">9</button>
+            <button class="operator" onclick="updateDisplay('')"></button>
+            <br/>
+            <button class="number" onclick="updateDisplay('4')">4</button>
+            <button class="number" onclick="updateDisplay('5')">5</button>
+            <button class="number" onclick="updateDisplay('6')">6</button>
+            <button class="operator" onclick="updateDisplay('-')">-</button>
+            <br/>
+            <button class="number" onclick="updateDisplay('1')">1</button>
+            <button class="number" onclick="updateDisplay('2')">2</button>
+            <button class="number" onclick="updateDisplay('3')">3</button>
+            <button class="operator" onclick="updateDisplay('+')">+</button>
+            <br/>
+            <button class="number" onclick="updateDisplay('00')">00</button>
+            <button class="number" onclick="updateDisplay('0')">0</button>
+            <button class="number" onclick="updateDisplay('.')">.</button>
+            <button class="equal" onclick="calculate()">=</button>
+        </div>
+    </div>
+ 
+    <script>
+        function updateDisplay(value) {
+            document.querySelector('.display').innerText += value;
+            //ConversionController.pressNumber(value);
+        }
+ 
+        function calculate() {
+            var result = eval(document.querySelector('.display').innerText);
+            document.querySelector('.display').innerText = result;
+            //  ConversionController.calculate();
+        }
+ 
+        function backspace() {
+            var currentDisplay = document.querySelector('.display').innerText;
+            document.querySelector('.display').innerText = currentDisplay.slice(0, -1);
+            //ConversionController.backspace();
+        }
+ 
+        function clearDisplay() {
+            document.querySelector('.display').innerText = '0';
+            
+        }
+    </script>
+</apex:page>
